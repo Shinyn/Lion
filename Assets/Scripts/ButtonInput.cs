@@ -14,28 +14,30 @@ public class ButtonInput : MonoBehaviour
 
     public Button button;
 
-    public delegate void ButtonPressed();
-    public static event ButtonPressed OnLeftUpPressed;
-    
+    // Button input behöver kommunicera med fireman inte tvärtom
+    public LionTamerController lionTamer;
 
+
+       
     private void OnMouseDown()
     {
-        if (OnLeftUpPressed != null && button == Button.topLeft)
+       
+        if (button == Button.topLeft)
         {
-            OnLeftUpPressed();
-            //Debug.Log("top left");
+            //Här kommer vi åt firemans funktioner
+            lionTamer.OnLeftUpPressed();
         }
         else if (button == Button.bottomLeft)
         {
-            //Debug.Log("bottom left");
+            lionTamer.OnLeftDownPressed();
         }
         else if (button == Button.topRight)
         {
-            //Debug.Log("top right");
+            lionTamer.OnRightUpPressed();
         }
         else if (button == Button.bottomRight)
         {
-            //Debug.Log("bottom right");
+            lionTamer.OnRightDownPressed();
         }
         
     }

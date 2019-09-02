@@ -6,42 +6,23 @@ public class LionTamerController : MonoBehaviour
 {
     public List<Transform> positions = new List<Transform>();
     int currentPositionLeftSide = 1;
-    int currentPositionRightSide = 0;
+    int currentPositionRightSide = 4;
+    public bool left;
+    private ButtonInput buttonInput;
 
     void Start()
     {
-        UpdateLeftPosition();
-        UpdateRightPosition();
+        if (left)
+        {
+            UpdateLeftPosition();
+        }
+        else
+        {
+            UpdateRightPosition();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnEnable()
-    {
-        ButtonInput.OnLeftUpPressed += OnLeftUpPressed;
-    }
-
-    private void OnDisable()
-    {
-        ButtonInput.OnLeftUpPressed -= OnLeftUpPressed;
-    }
-    private void UpdateLeftPosition()
-    {
-        transform.position = positions[currentPositionLeftSide].position;
-        Debug.Log("update pos left");
-    }
-
-    private void UpdateRightPosition()
-    {
-        transform.position = positions[currentPositionRightSide].position;
-        Debug.Log("update pos right");
-    }
-
-    private void OnLeftUpPressed()
+    public void OnLeftUpPressed()
     {
         if (currentPositionLeftSide > 0)
         {
@@ -50,31 +31,41 @@ public class LionTamerController : MonoBehaviour
         }
     }
 
-    private void OnLeftDownPressed()
+    public void OnLeftDownPressed()
     {
-        if (currentPositionLeftSide < positions.Count - 1)
+        //Debug.Log("Left down");
+        if (currentPositionLeftSide < 2)
         {
             currentPositionLeftSide++;
             UpdateLeftPosition();
         }
     }
 
-    private void OnRightUpPressed()
+    public void OnRightUpPressed()
     {
-        if (currentPositionRightSide > 0)
+        if (currentPositionRightSide > 3)
         {
             currentPositionRightSide--;
             UpdateRightPosition();
         }
     }
 
-    private void OnRightDownPressed()
+    public void OnRightDownPressed()
     {
-        if (currentPositionRightSide < positions.Count - 1)
+        if (currentPositionRightSide < positions.Count -1)
         {
             currentPositionRightSide++;
             UpdateRightPosition();
-            Debug.Log("rightDown updated");
         }
+    }
+
+    private void UpdateLeftPosition()
+    {
+        transform.position = positions[currentPositionLeftSide].position;
+    }
+
+    private void UpdateRightPosition()
+    {
+        transform.position = positions[currentPositionRightSide].position;
     }
 }
