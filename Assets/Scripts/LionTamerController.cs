@@ -6,66 +6,56 @@ public class LionTamerController : MonoBehaviour
 {
     [SerializeField]
     private List<Transform> positions = new List<Transform>();
-    int currentPositionLeftSide = 1;
-    int currentPositionRightSide = 4;
-    public bool left;
+    public int currentPosition = 1;
     private ButtonInput buttonInput;
 
     void Start()
     {
-        if (left)
-        {
-            UpdateLeftPosition();
-        }
-        else
-        {
-            UpdateRightPosition();
-        }
+        UpdateCurrentPosition();
     }
 
     public void OnLeftUpPressed()
     {
-        if (currentPositionLeftSide > 0)
+        if (currentPosition > 0)
         {
-            currentPositionLeftSide--;
-            UpdateLeftPosition();
+            //Debug.Log("Left up");
+            currentPosition--;
+            UpdateCurrentPosition();
         }
     }
 
     public void OnLeftDownPressed()
     {
-        if (currentPositionLeftSide < 2)
+        if (currentPosition < 2)
         {
-            currentPositionLeftSide++;
-            UpdateLeftPosition();
+            //Debug.Log("Left down");
+            currentPosition++;
+            UpdateCurrentPosition();
         }
     }
 
     public void OnRightUpPressed()
     {
-        if (currentPositionRightSide > 3)
+        if (currentPosition > 3)
         {
-            currentPositionRightSide--;
-            UpdateRightPosition();
+            //Debug.Log("Right up");
+            currentPosition--;
+            UpdateCurrentPosition();
         }
     }
 
     public void OnRightDownPressed()
     {
-        if (currentPositionRightSide < positions.Count -1)
+        if (currentPosition < positions.Count -1)
         {
-            currentPositionRightSide++;
-            UpdateRightPosition();
+            //Debug.Log("Right down");
+            currentPosition++;
+            UpdateCurrentPosition();
         }
     }
 
-    private void UpdateLeftPosition()
+    private void UpdateCurrentPosition()
     {
-        transform.position = positions[currentPositionLeftSide].position;
-    }
-
-    private void UpdateRightPosition()
-    {
-        transform.position = positions[currentPositionRightSide].position;
+        transform.position = positions[currentPosition].position;
     }
 }

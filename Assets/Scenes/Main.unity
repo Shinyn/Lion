@@ -410,6 +410,7 @@ MonoBehaviour:
   - {fileID: 539400804}
   currentPosition: 9
   otherMinotaur: {fileID: 856843039}
+  lionTamer: {fileID: 0}
 --- !u!1 &90729245
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +991,7 @@ MonoBehaviour:
   - {fileID: 1367493331}
   - {fileID: 710065438}
   - {fileID: 1913450071}
-  left: 1
+  currentPosition: 1
 --- !u!1 &710065437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,6 +1196,7 @@ MonoBehaviour:
   - {fileID: 539400804}
   currentPosition: 8
   otherMinotaur: {fileID: 72088694}
+  lionTamer: {fileID: 0}
 --- !u!1 &886623906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,7 +1546,7 @@ MonoBehaviour:
   - {fileID: 1367493331}
   - {fileID: 710065438}
   - {fileID: 1913450071}
-  left: 0
+  currentPosition: 4
 --- !u!1 &1062907850
 GameObject:
   m_ObjectHideFlags: 0

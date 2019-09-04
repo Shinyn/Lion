@@ -9,14 +9,16 @@ public class MinotaurController : MonoBehaviour
     public int currentPosition = 8;
    
     float lastMoveTime = 1.0f;
-    float moveDelay = 1.0f;
+    float moveDelay; 
 
     public MinotaurController otherMinotaur;
+    public LionTamerController lionTamer;
 
     void Start()
     {
         UpdateMinotaurPosition();
         lastMoveTime = Time.time;
+        moveDelay = Random.Range(0.5f, 1.0f);
     }
 
     private void Update()
@@ -24,6 +26,7 @@ public class MinotaurController : MonoBehaviour
         if (Time.time > lastMoveTime + moveDelay)
         {
             MovePosition();
+            Attack();
             lastMoveTime = Time.time;
         }
     }
@@ -36,7 +39,6 @@ public class MinotaurController : MonoBehaviour
 
     private void MovePosition()
     {
-        //currentPosition++;
         RandomizePosition();
         UpdateMinotaurPosition();
         
@@ -71,7 +73,7 @@ public class MinotaurController : MonoBehaviour
 
     private void MoveLeft()
     {
-        // måste ha en koll för om platsen är okuperad också
+        // Kollar så att den inte går till en position på andra sidan planen och att platsen inte är upptagen
         if (currentPosition != 0 && currentPosition != 6 && currentPosition != 12 && currentPosition - 1 != otherMinotaur.currentPosition)
         {
             currentPosition--;
@@ -84,7 +86,7 @@ public class MinotaurController : MonoBehaviour
 
     private void MoveRight()
     {
-        // måste ha en koll för om platsen är okuperad också
+        // Kollar så att den inte går till en position på andra sidan planen och att platsen inte är upptagen
         if (currentPosition != 5 && currentPosition != 11 && currentPosition != 17 && currentPosition + 1 != otherMinotaur.currentPosition)
         {
             currentPosition++;
@@ -97,7 +99,7 @@ public class MinotaurController : MonoBehaviour
 
     private void RandomizePosition()
     {
-        int random = Random.Range(1, 5);
+        int random = Random.Range(1, 6);
         switch (random)
         {
             case 1:
@@ -112,6 +114,24 @@ public class MinotaurController : MonoBehaviour
             case 4:
                 MoveRight();
                 break;
+            case 5:
+                // Väntar
+                break;
+        }
+    }
+
+    private void Attack()
+    {
+        // Fel här nullReferenceException på lionTamer
+        if (currentPosition == 0 && lionTamer.currentPosition == 0 || currentPosition == 6 && lionTamer.currentPosition == 1 || currentPosition == 12 && lionTamer.currentPosition == 2)
+        {
+            // kolla om det finns en Tamer till vänster
+            Debug.Log("Saved");
+        }
+
+        if (currentPosition == 5 || currentPosition == 11 || currentPosition == 17)
+        {
+            // kolla om det finns en Tamer till höger
         }
     }
 }
