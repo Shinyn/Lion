@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LionTamerController : MonoBehaviour
 {
-    public List<Transform> positions = new List<Transform>();
+    [SerializeField]
+    private List<Transform> positions = new List<Transform>();
     int currentPositionLeftSide = 1;
     int currentPositionRightSide = 4;
     public bool left;
@@ -33,7 +34,6 @@ public class LionTamerController : MonoBehaviour
 
     public void OnLeftDownPressed()
     {
-        //Debug.Log("Left down");
         if (currentPositionLeftSide < 2)
         {
             currentPositionLeftSide++;
