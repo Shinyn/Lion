@@ -14,6 +14,9 @@ public class MinotaurController : MonoBehaviour
     public MinotaurController otherMinotaur;
     public LionTamerController lionTamer;
 
+    LayerMask tamerLayer;
+    bool leftRayHit;
+
     void Start()
     {
         UpdateMinotaurPosition();
@@ -26,7 +29,6 @@ public class MinotaurController : MonoBehaviour
         if (Time.time > lastMoveTime + moveDelay)
         {
             MovePosition();
-            Attack();
             lastMoveTime = Time.time;
         }
     }
@@ -39,8 +41,25 @@ public class MinotaurController : MonoBehaviour
 
     private void MovePosition()
     {
-        RandomizePosition();
+        if (positions[currentPosition].gameObject.tag == "FreeMovePosition")
+        {
+            RandomizePosition();
+        }
+        else if (positions[currentPosition].gameObject.tag == "LeftAttackPosition")
+        {
+            MoveLeft();
+        }
+        else if (positions[currentPosition].gameObject.tag == "RightAttackPosition")
+        {
+            MoveRight();
+        }
+        else if (positions[currentPosition].gameObject.tag == "DangerPosition")
+        {
+            ReturnToMiddle();
+        }
+        
         UpdateMinotaurPosition();
+        CheckCollision();
         
         // ska kunna gå åt olika håll
         // ska ha en attack fas
@@ -120,18 +139,40 @@ public class MinotaurController : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void CheckCollision()
     {
-        // Fel här nullReferenceException på lionTamer
-        if (currentPosition == 0 && lionTamer.currentPosition == 0 || currentPosition == 6 && lionTamer.currentPosition == 1 || currentPosition == 12 && lionTamer.currentPosition == 2)
+        
+        if (positions[currentPosition].gameObject.tag == "DangerPosition")
         {
-            // kolla om det finns en Tamer till vänster
-            Debug.Log("Saved");
+            // Skjuter ut två laserstrålar åt höger och vänster för att kolla om den träffar något
+            tamerLayer = LayerMask.GetMask("TamerLayer");
+            RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 3.0f, tamerLayer);
+            RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, 3.0f, tamerLayer);
+
+            if (hitLeft.collider == null && hitRight.collider == null)
+            {
+                // Missar raycasten en tamer så flyr minotauren
+                Debug.Log("Minotaur escaped");
+            }
+            else
+            {
+                // Träffar raycasten en tamer så klarade vi oss
+                Debug.Log("You fend off the minotaur");
+            }
+        }
+    }
+
+    private void ReturnToMiddle()
+    {
+        if (positions[currentPosition].gameObject.tag == "DangerPosition" &&)
+        {
+            //Efter attack ska minotauren gå tillbaka till mitten
+            
         }
 
-        if (currentPosition == 5 || currentPosition == 11 || currentPosition == 17)
-        {
-            // kolla om det finns en Tamer till höger
-        }
+
+        // behöver göra så att den bara får gå upp eller ner i dom 6 mittersta punkterna
+        // gör if sats - Kolla om man är på dom 6 innersta positionerna, är man det kan man randomisera
+        // är man inte det ska man attackera mot den närmaste tamern
     }
 }
