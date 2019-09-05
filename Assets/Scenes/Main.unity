@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 11359906}
   m_Layer: 0
   m_Name: Position (12)
-  m_TagString: DangerPosition
+  m_TagString: LeftDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -411,6 +411,7 @@ MonoBehaviour:
   currentPosition: 9
   otherMinotaur: {fileID: 856843039}
   lionTamer: {fileID: 0}
+  leftRayHit: 0
 --- !u!1 &90729245
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +858,7 @@ GameObject:
   - component: {fileID: 539400804}
   m_Layer: 0
   m_Name: Position (17)
-  m_TagString: DangerPosition
+  m_TagString: RightDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1090,7 +1091,7 @@ GameObject:
   - component: {fileID: 855963202}
   m_Layer: 0
   m_Name: Position (6)
-  m_TagString: DangerPosition
+  m_TagString: LeftDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,6 +1225,7 @@ MonoBehaviour:
   currentPosition: 8
   otherMinotaur: {fileID: 72088694}
   lionTamer: {fileID: 0}
+  leftRayHit: 0
 --- !u!1 &886623906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,7 +1237,7 @@ GameObject:
   - component: {fileID: 886623907}
   m_Layer: 0
   m_Name: Position (5)
-  m_TagString: DangerPosition
+  m_TagString: RightDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1265,7 +1267,7 @@ GameObject:
   - component: {fileID: 1005785439}
   m_Layer: 0
   m_Name: Position
-  m_TagString: DangerPosition
+  m_TagString: LeftDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2408,7 +2410,7 @@ GameObject:
   - component: {fileID: 1879258793}
   m_Layer: 0
   m_Name: Position (11)
-  m_TagString: DangerPosition
+  m_TagString: RightDangerPosition
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

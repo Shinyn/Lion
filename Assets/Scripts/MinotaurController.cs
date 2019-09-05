@@ -15,7 +15,7 @@ public class MinotaurController : MonoBehaviour
     public LionTamerController lionTamer;
 
     LayerMask tamerLayer;
-    bool leftRayHit;
+    public bool leftRayHit;
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class MinotaurController : MonoBehaviour
         {
             MoveRight();
         }
-        else if (positions[currentPosition].gameObject.tag == "DangerPosition")
+        else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" || positions[currentPosition].gameObject.tag == "RightDangerPosition")
         {
             ReturnToMiddle();
         }
@@ -134,7 +134,7 @@ public class MinotaurController : MonoBehaviour
                 MoveRight();
                 break;
             case 5:
-                // Väntar
+                // Väntar till nästa Randomize
                 break;
         }
     }
@@ -142,7 +142,7 @@ public class MinotaurController : MonoBehaviour
     private void CheckCollision()
     {
         
-        if (positions[currentPosition].gameObject.tag == "DangerPosition")
+        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" || positions[currentPosition].gameObject.tag == "RightDangerPosition")
         {
             // Skjuter ut två laserstrålar åt höger och vänster för att kolla om den träffar något
             tamerLayer = LayerMask.GetMask("TamerLayer");
@@ -152,27 +152,49 @@ public class MinotaurController : MonoBehaviour
             if (hitLeft.collider == null && hitRight.collider == null)
             {
                 // Missar raycasten en tamer så flyr minotauren
+                // - 1 liv, vid 3 missade liv = Game Over!
                 Debug.Log("Minotaur escaped");
             }
-            else
+            else if (hitLeft.collider != null)
             {
+                leftRayHit = true;
                 // Träffar raycasten en tamer så klarade vi oss
+                // +1 poäng
+                Debug.Log("You fend off the minotaur");
+            }
+            else if (hitRight.collider != null)
+            {
+                leftRayHit = false;
+                // Träffar raycasten en tamer så klarade vi oss
+                // +1 poäng
                 Debug.Log("You fend off the minotaur");
             }
         }
     }
 
+    //Efter attack ska minotauren gå tillbaka till mitten
     private void ReturnToMiddle()
     {
-        if (positions[currentPosition].gameObject.tag == "DangerPosition" &&)
+        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && leftRayHit == true)
         {
-            //Efter attack ska minotauren gå tillbaka till mitten
-            
+            currentPosition += 2;
         }
-
-
-        // behöver göra så att den bara får gå upp eller ner i dom 6 mittersta punkterna
-        // gör if sats - Kolla om man är på dom 6 innersta positionerna, är man det kan man randomisera
-        // är man inte det ska man attackera mot den närmaste tamern
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && leftRayHit == false)
+        {
+            currentPosition -= 2;
+        } 
+        
+        else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && leftRayHit != true)
+        {
+            // Skriver bara ut ibland??
+            Debug.Log("ESCAPE LEFT");
+            currentPosition += 2;
+        } 
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && leftRayHit != false)
+        {
+            // Skriver bara ut ibland??
+            Debug.Log("ESCAPE RIGHT");
+            currentPosition -= 2;
+        }
     }
 }
