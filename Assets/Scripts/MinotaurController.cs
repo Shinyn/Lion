@@ -9,7 +9,9 @@ public class MinotaurController : MonoBehaviour
     public int currentPosition = 8;
    
     float lastMoveTime = 1.0f;
-    float moveDelay; 
+
+    [Range(0.5f, 2.0f)]
+    public float moveDelay; 
 
     public MinotaurController otherMinotaur;
     //public LionTamerController lionTamer;
@@ -22,7 +24,7 @@ public class MinotaurController : MonoBehaviour
     {
         UpdateMinotaurPosition();
         lastMoveTime = Time.time;
-        moveDelay = Random.Range(0.5f, 1.0f);
+        moveDelay = Random.Range(0.5f, 1.5f);
     }
 
     private void Update()
@@ -152,9 +154,7 @@ public class MinotaurController : MonoBehaviour
 
             if (hitLeft.collider == null && hitRight.collider == null)
             {
-                // Missar raycasten en tamer så flyr minotauren
-                // - 1 liv, vid 3 missade liv = Game Over!
-                // Debug.Log("Minotaur escaped");
+                // Missar raycasten en tamer så flyr minotauren (1 miss)
                 gameManager.EscapedLions();
                 rayHit = false;
             }
@@ -162,9 +162,7 @@ public class MinotaurController : MonoBehaviour
             {
                 rayHit = true;
                 gameManager.AddPoint();
-                // Träffar raycasten en tamer så klarade vi oss
-                // +1 poäng
-                //Debug.Log("You fend off the minotaur");
+                // Träffar raycasten en tamer så klarade vi oss (1 poäng)
             }
         }
     }
@@ -185,13 +183,11 @@ public class MinotaurController : MonoBehaviour
         
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
-            // Skriver bara ut ibland??
             Debug.Log("ESCAPE LEFT");
             currentPosition += 2;
         } 
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
         {
-            // Skriver bara ut ibland??
             Debug.Log("ESCAPE RIGHT");
             currentPosition -= 2;
         }
