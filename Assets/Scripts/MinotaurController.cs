@@ -15,7 +15,7 @@ public class MinotaurController : MonoBehaviour
     public LionTamerController lionTamer;
 
     LayerMask tamerLayer;
-    public bool leftRayHit;
+    public bool rayHit;
 
     void Start()
     {
@@ -153,21 +153,15 @@ public class MinotaurController : MonoBehaviour
             {
                 // Missar raycasten en tamer så flyr minotauren
                 // - 1 liv, vid 3 missade liv = Game Over!
-                Debug.Log("Minotaur escaped");
+                // Debug.Log("Minotaur escaped");
+                rayHit = false;
             }
-            else if (hitLeft.collider != null)
+            else 
             {
-                leftRayHit = true;
+                rayHit = true;
                 // Träffar raycasten en tamer så klarade vi oss
                 // +1 poäng
-                Debug.Log("You fend off the minotaur");
-            }
-            else if (hitRight.collider != null)
-            {
-                leftRayHit = false;
-                // Träffar raycasten en tamer så klarade vi oss
-                // +1 poäng
-                Debug.Log("You fend off the minotaur");
+                //Debug.Log("You fend off the minotaur");
             }
         }
     }
@@ -175,22 +169,24 @@ public class MinotaurController : MonoBehaviour
     //Efter attack ska minotauren gå tillbaka till mitten
     private void ReturnToMiddle()
     {
-        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && leftRayHit == true)
+        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit )
         {
             currentPosition += 2;
+            Debug.Log("saved LEFT");
         }
-        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && leftRayHit == false)
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit )
         {
             currentPosition -= 2;
+            Debug.Log("saved right");
         } 
         
-        else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && leftRayHit != true)
+        else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
             // Skriver bara ut ibland??
             Debug.Log("ESCAPE LEFT");
             currentPosition += 2;
         } 
-        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && leftRayHit != false)
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
         {
             // Skriver bara ut ibland??
             Debug.Log("ESCAPE RIGHT");
