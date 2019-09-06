@@ -12,7 +12,8 @@ public class MinotaurController : MonoBehaviour
     float moveDelay; 
 
     public MinotaurController otherMinotaur;
-    public LionTamerController lionTamer;
+    //public LionTamerController lionTamer;
+    public GameManager gameManager;
 
     LayerMask tamerLayer;
     public bool rayHit;
@@ -154,11 +155,13 @@ public class MinotaurController : MonoBehaviour
                 // Missar raycasten en tamer så flyr minotauren
                 // - 1 liv, vid 3 missade liv = Game Over!
                 // Debug.Log("Minotaur escaped");
+                gameManager.EscapedLions();
                 rayHit = false;
             }
             else 
             {
                 rayHit = true;
+                gameManager.AddPoint();
                 // Träffar raycasten en tamer så klarade vi oss
                 // +1 poäng
                 //Debug.Log("You fend off the minotaur");
