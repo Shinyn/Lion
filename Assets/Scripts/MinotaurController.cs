@@ -8,9 +8,10 @@ public class MinotaurController : MonoBehaviour
     private List<Transform> positions = new List<Transform>();
     public int currentPosition = 8;
    
-    float lastMoveTime = 1.0f;
+    float lastMoveTime = 1.5f;
+    SpriteRenderer spriteRenderer;
 
-    [Range(0.5f, 2.0f)]
+    //[Range(0.5f, 1.5f)]
     public float moveDelay; 
 
     public MinotaurController otherMinotaur;
@@ -24,7 +25,7 @@ public class MinotaurController : MonoBehaviour
     {
         UpdateMinotaurPosition();
         lastMoveTime = Time.time;
-        moveDelay = Random.Range(0.5f, 1.5f);
+        moveDelay = Random.Range(0.5f, 1.0f);
     }
 
     private void Update()
@@ -32,6 +33,7 @@ public class MinotaurController : MonoBehaviour
         if (Time.time > lastMoveTime + moveDelay)
         {
             MovePosition();
+            FlipMinotaur();
             lastMoveTime = Time.time;
         }
     }
@@ -50,23 +52,34 @@ public class MinotaurController : MonoBehaviour
         }
         else if (positions[currentPosition].gameObject.tag == "LeftAttackPosition")
         {
-            MoveLeft();
+            TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "RightAttackPosition")
         {
-            MoveRight();
+            TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" || positions[currentPosition].gameObject.tag == "RightDangerPosition")
         {
             ReturnToMiddle();
         }
-        
+
         UpdateMinotaurPosition();
         CheckCollision();
         
         // ska kunna gå åt olika håll
         // ska ha en attack fas
         // ska inte kunna stå på samma plats som en annan minotaur
+    }
+
+    private void FlipMinotaur()
+    {
+        // om x > 0 disable x annars enable x
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (transform.position.x < 0)
+            spriteRenderer.flipX = false;
+
+        else
+            spriteRenderer.flipX = true;
     }
 
     private void MoveUp()
@@ -116,6 +129,20 @@ public class MinotaurController : MonoBehaviour
         else
         {
             RandomizePosition();
+        }
+    }
+
+    private void TrickTamer()
+    {
+        int random = Random.Range(1, 3);
+        switch (random)
+        {
+            case 1:
+                MoveLeft();
+                break;
+            case 2:
+                MoveRight();
+                break;
         }
     }
 
@@ -173,22 +200,22 @@ public class MinotaurController : MonoBehaviour
         if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit )
         {
             currentPosition += 2;
-            Debug.Log("saved LEFT");
+            //Debug.Log("saved LEFT");
         }
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit )
         {
             currentPosition -= 2;
-            Debug.Log("saved right");
+            //Debug.Log("saved right");
         } 
         
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
-            Debug.Log("ESCAPE LEFT");
+            //Debug.Log("ESCAPE LEFT");
             currentPosition += 2;
         } 
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
         {
-            Debug.Log("ESCAPE RIGHT");
+            //Debug.Log("ESCAPE RIGHT");
             currentPosition -= 2;
         }
     }
