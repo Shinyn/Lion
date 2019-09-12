@@ -13,18 +13,12 @@ public class ButtonInput : MonoBehaviour
     };
 
     public Button button;
-
-    // Button input behöver kommunicera med fireman inte tvärtom
     public LionTamerController lionTamer;
 
-
-       
     private void OnMouseDown()
     {
-       
         if (button == Button.topLeft)
         {
-            //Här kommer vi åt firemans funktioner
             lionTamer.OnLeftUpPressed();
         }
         else if (button == Button.bottomLeft)
@@ -39,6 +33,5 @@ public class ButtonInput : MonoBehaviour
         {
             lionTamer.OnRightDownPressed();
         }
-        
     }
 }

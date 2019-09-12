@@ -51,11 +51,8 @@ public class GameManager : MonoBehaviour
         lionTamerController1.gameObject.SetActive(false);
         lionTamerController2.gameObject.SetActive(false);
 
-        // delay på minotaurerna så dom syns i sista position innan gameover
-        // lägga till sprites
         // fixa så dom inte hoppar tillbaka på en annan minotaur vid save eller fail
         // fixa så dom hoppar tillbaka 1 steg i taget vid save eller fail
-        // byt till touch och testa på mobil - Optional (mousedown funkar på telefon också)
         // lägg till 2 "escaped" punkter när minotaurerna tagit sig ut
         // lägg till 2 "scared" punkter för tamers när minotaurerna tagit sig ut
     }

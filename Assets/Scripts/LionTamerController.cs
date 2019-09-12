@@ -18,7 +18,6 @@ public class LionTamerController : MonoBehaviour
     {
         if (currentPosition > 0)
         {
-            //Debug.Log("Left up");
             currentPosition--;
             UpdateCurrentPosition();
         }
@@ -28,7 +27,6 @@ public class LionTamerController : MonoBehaviour
     {
         if (currentPosition < 2)
         {
-            //Debug.Log("Left down");
             currentPosition++;
             UpdateCurrentPosition();
         }
@@ -38,7 +36,6 @@ public class LionTamerController : MonoBehaviour
     {
         if (currentPosition > 3)
         {
-            //Debug.Log("Right up");
             currentPosition--;
             UpdateCurrentPosition();
         }
@@ -48,7 +45,6 @@ public class LionTamerController : MonoBehaviour
     {
         if (currentPosition < positions.Count -1)
         {
-            //Debug.Log("Right down");
             currentPosition++;
             UpdateCurrentPosition();
         }

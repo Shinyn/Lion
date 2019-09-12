@@ -7,17 +7,11 @@ public class MinotaurController : MonoBehaviour
     [SerializeField]
     private List<Transform> positions = new List<Transform>();
     public int currentPosition = 8;
-   
     float lastMoveTime = 1.5f;
     SpriteRenderer spriteRenderer;
-
-    //[Range(0.5f, 1.5f)]
     public float moveDelay; 
-
     public MinotaurController otherMinotaur;
-    //public LionTamerController lionTamer;
     public GameManager gameManager;
-
     LayerMask tamerLayer;
     public bool rayHit;
 
@@ -65,15 +59,11 @@ public class MinotaurController : MonoBehaviour
 
         UpdateMinotaurPosition();
         CheckCollision();
-        
-        // ska kunna gå åt olika håll
-        // ska ha en attack fas
-        // ska inte kunna stå på samma plats som en annan minotaur
     }
 
     private void FlipMinotaur()
     {
-        // om x > 0 disable x annars enable x
+        // vänder minotauren beroende på vilken sida om 0 den är på x-axeln
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (transform.position.x < 0)
             spriteRenderer.flipX = false;
@@ -200,22 +190,18 @@ public class MinotaurController : MonoBehaviour
         if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit )
         {
             currentPosition += 2;
-            //Debug.Log("saved LEFT");
         }
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit )
         {
             currentPosition -= 2;
-            //Debug.Log("saved right");
         } 
         
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
-            //Debug.Log("ESCAPE LEFT");
             currentPosition += 2;
         } 
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
         {
-            //Debug.Log("ESCAPE RIGHT");
             currentPosition -= 2;
         }
     }
