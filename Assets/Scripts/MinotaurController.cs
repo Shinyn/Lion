@@ -6,14 +6,18 @@ public class MinotaurController : MonoBehaviour
 {
     [SerializeField]
     private List<Transform> positions = new List<Transform>();
-    public int currentPosition = 8;
+    public int currentPosition = 10;
     float lastMoveTime = 1.5f;
     SpriteRenderer spriteRenderer;
     public float moveDelay; 
     public MinotaurController otherMinotaur;
     public GameManager gameManager;
     LayerMask tamerLayer;
+
+    [HideInInspector]
     public bool rayHit;
+    bool hasAttacked = false;
+    bool wasStopped = false;
 
     void Start()
     {
@@ -46,15 +50,36 @@ public class MinotaurController : MonoBehaviour
         }
         else if (positions[currentPosition].gameObject.tag == "LeftAttackPosition")
         {
+            if (hasAttacked == true)
+                currentPosition++;
+            
+            else
             TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "RightAttackPosition")
         {
+            if (hasAttacked == true)
+                currentPosition--;
+
+            else
             TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" || positions[currentPosition].gameObject.tag == "RightDangerPosition")
         {
-            ReturnToMiddle();
+            if (hasAttacked == true && wasStopped == true)
+            {
+                // gå tillbaka till mitten (ett steg i taget)
+                ReturnToMiddle();
+            }
+            else if (hasAttacked == true && wasStopped == false)
+            {
+                // escape
+                EscapeSequence();
+            }
+            else if (hasAttacked == false)
+            {
+
+            }
         }
 
         UpdateMinotaurPosition();
@@ -189,13 +214,17 @@ public class MinotaurController : MonoBehaviour
     {
         if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit )
         {
-            currentPosition += 2;
+            currentPosition ++;
+            hasAttacked = true;
         }
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit )
         {
-            currentPosition -= 2;
+            currentPosition --;
+            hasAttacked = true;
         } 
         
+        // fixa escape här istället och frys spelet tills animationen är klar och sen gå tillbaka
+        /*
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
             currentPosition += 2;
@@ -203,6 +232,22 @@ public class MinotaurController : MonoBehaviour
         else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
         {
             currentPosition -= 2;
+        }
+        */
+    }
+
+    private void EscapeSequence()
+    {
+        // pendla mellan escape positionerna
+        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
+        {
+            MoveLeft();
+            wasStopped = false;
+        }
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
+        {
+            MoveRight();
+            wasStopped = false;
         }
     }
 }
