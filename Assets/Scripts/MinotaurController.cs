@@ -14,6 +14,12 @@ public class MinotaurController : MonoBehaviour
     public GameManager gameManager;
     LayerMask tamerLayer;
 
+    public GameObject input;
+    public bool leftMinotaur;
+    float escapeDuration = 1.5f;
+    LionTamerController lionTamer;
+    Rigidbody2D rigidbody;
+
     [HideInInspector]
     public bool rayHit;
     bool hasAttacked = false;
@@ -51,34 +57,39 @@ public class MinotaurController : MonoBehaviour
         else if (positions[currentPosition].gameObject.tag == "LeftAttackPosition")
         {
             if (hasAttacked == true)
+            {
                 currentPosition++;
-            
+                hasAttacked = false;
+            }
+
             else
-            TrickTamer();
+                TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "RightAttackPosition")
         {
             if (hasAttacked == true)
+            {
                 currentPosition--;
+                hasAttacked = false;
+            }
 
             else
-            TrickTamer();
+                TrickTamer();
         }
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" || positions[currentPosition].gameObject.tag == "RightDangerPosition")
         {
-            if (hasAttacked == true && wasStopped == true)
+            if (wasStopped == true)
             {
                 // gå tillbaka till mitten (ett steg i taget)
                 ReturnToMiddle();
+                hasAttacked = true;
             }
-            else if (hasAttacked == true && wasStopped == false)
+            else if (wasStopped == false)
             {
-                // escape
-                EscapeSequence();
-            }
-            else if (hasAttacked == false)
-            {
-
+                // frys tamers och sätt den som failade i sin special position
+                // när en minotaur flyr så resettas båda till sin orginal position
+                StartCoroutine(Escape());
+                wasStopped = false;
             }
         }
 
@@ -203,6 +214,7 @@ public class MinotaurController : MonoBehaviour
             else 
             {
                 rayHit = true;
+                wasStopped = true;
                 gameManager.AddPoint();
                 // Träffar raycasten en tamer så klarade vi oss (1 poäng)
             }
@@ -212,42 +224,94 @@ public class MinotaurController : MonoBehaviour
     //Efter attack ska minotauren gå tillbaka till mitten
     private void ReturnToMiddle()
     {
-        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit )
+        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && rayHit)
         {
             currentPosition ++;
-            hasAttacked = true;
+            wasStopped = true;
+            //Debug.Log("return left pos");
         }
-        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit )
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && rayHit)
         {
             currentPosition --;
-            hasAttacked = true;
+            wasStopped = true;
+            //Debug.Log("return right pos");
         } 
-        
-        // fixa escape här istället och frys spelet tills animationen är klar och sen gå tillbaka
+
         /*
+        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
+        {
+
+        }
         else if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
         {
-            currentPosition += 2;
-        } 
-        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
-        {
-            currentPosition -= 2;
-        }
-        */
+
+        } */
+        // fixa escape här istället och frys spelet tills animationen är klar och sen gå tillbaka
     }
 
-    private void EscapeSequence()
+    IEnumerator Escape()
     {
-        // pendla mellan escape positionerna
-        if (positions[currentPosition].gameObject.tag == "LeftDangerPosition" && !rayHit)
+        // Stäng av allt i Escape();
+
+        // stäng av input
+        // pausa andra minotauren
+        // sätt rätt tamer i scared position
+        // byt tamer sprite
+        // sätt minotaur i escape position
+        // flytta minotaur i rätt riktning
+        // när minotaur inte syns av kameran så reset position
+        // reset tamer position
+        // byt tillbaka till rätt tamer sprite
+        // sätt på input igen
+
+        input.SetActive(false);
+        if (lionTamer.leftTamer)
         {
-            MoveLeft();
-            wasStopped = false;
+            // ändra sprite
+            lionTamer.currentPosition = 3;
+            lionTamer.UpdateCurrentPosition();
         }
-        else if (positions[currentPosition].gameObject.tag == "RightDangerPosition" && !rayHit)
+        else if (!lionTamer.leftTamer)
         {
-            MoveRight();
-            wasStopped = false;
+            // ändra sprite
+            lionTamer.currentPosition = 7;
+            lionTamer.UpdateCurrentPosition();
         }
+
+        if (leftMinotaur)
+        {
+            // KOLLA VILKEN SIDA AV 0 DEN ÄR PÅ X
+            rigidbody.AddForce(Vector2.left * 100);
+            
+        }
+        else
+        {
+            rigidbody.AddForce(Vector2.right * 100);
+            
+        }
+        /* Andra sättet att stänga av input
+        GameObject inpt = GameObject.Find("Input");
+        inpt.SetActive(false);
+        */
+
+        yield return new WaitForSeconds(escapeDuration);
+        // efter att minotauren flytt så resetta positionen
+        
+    }
+
+    private void OnBecameInvisible()
+    {
+        // Sätt på allt igen som stängdes av i Escape();
+        // all kod som resettar allt ska in här
+        if (leftMinotaur)
+        {
+            currentPosition = 10;
+        }
+        else
+        {
+            currentPosition = 11;
+        }
+
+        input.SetActive(true);
     }
 }

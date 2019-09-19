@@ -13,6 +13,7 @@ public class ButtonInput : MonoBehaviour
     };
 
     public Button button;
+    [HideInInspector]
     public LionTamerController lionTamer;
 
     private void OnMouseDown()

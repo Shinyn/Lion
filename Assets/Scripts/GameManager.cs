@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         if (escapedLions < 3)
         {
-            Debug.Log(escapedLions);
+            //Debug.Log(escapedLions);
             escapedLions++;
             misses[activeMiss].SetActive(true);
             activeMiss++;

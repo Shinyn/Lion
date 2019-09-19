@@ -8,6 +8,7 @@ public class LionTamerController : MonoBehaviour
     private List<Transform> positions = new List<Transform>();
     public int currentPosition = 1;
     private ButtonInput buttonInput;
+    public bool leftTamer;
 
     void Start()
     {
@@ -34,7 +35,7 @@ public class LionTamerController : MonoBehaviour
 
     public void OnRightUpPressed()
     {
-        if (currentPosition > 3)
+        if (currentPosition > 4)
         {
             currentPosition--;
             UpdateCurrentPosition();
@@ -43,14 +44,14 @@ public class LionTamerController : MonoBehaviour
 
     public void OnRightDownPressed()
     {
-        if (currentPosition < positions.Count -1)
+        if (currentPosition < positions.Count -2)
         {
             currentPosition++;
             UpdateCurrentPosition();
         }
     }
 
-    private void UpdateCurrentPosition()
+    public void UpdateCurrentPosition()
     {
         transform.position = positions[currentPosition].position;
     }

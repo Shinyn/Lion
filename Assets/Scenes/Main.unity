@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 72088692}
   - component: {fileID: 72088693}
   - component: {fileID: 72088694}
+  - component: {fileID: 72088695}
   m_Layer: 0
   m_Name: minotaur (1)
   m_TagString: Untagged
@@ -338,7 +339,30 @@ MonoBehaviour:
   moveDelay: 0
   otherMinotaur: {fileID: 856843039}
   gameManager: {fileID: 1382174406}
+  input: {fileID: 1770525830}
+  leftMinotaur: 0
   rayHit: 0
+--- !u!50 &72088695
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72088691}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &90729245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1259,7 @@ MonoBehaviour:
   - {fileID: 1913450071}
   - {fileID: 1263035203}
   currentPosition: 1
+  leftTamer: 0
 --- !u!61 &554458397
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1877,6 +1902,7 @@ GameObject:
   - component: {fileID: 856843037}
   - component: {fileID: 856843038}
   - component: {fileID: 856843039}
+  - component: {fileID: 856843040}
   m_Layer: 0
   m_Name: minotaur
   m_TagString: Untagged
@@ -1986,7 +2012,30 @@ MonoBehaviour:
   moveDelay: 0
   otherMinotaur: {fileID: 72088694}
   gameManager: {fileID: 1382174406}
+  input: {fileID: 1770525830}
+  leftMinotaur: 0
   rayHit: 0
+--- !u!50 &856843040
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856843036}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &861653029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,6 +2612,7 @@ MonoBehaviour:
   - {fileID: 1913450071}
   - {fileID: 1263035203}
   currentPosition: 5
+  leftTamer: 0
 --- !u!61 &1041984743
 BoxCollider2D:
   m_ObjectHideFlags: 0
